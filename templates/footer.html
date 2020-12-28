@@ -1,0 +1,21 @@
+
+  <footer>
+    <div class="footer__menu">
+      <h2>
+        <i class="fa fa-caret-square-right"></i> المسلسلات
+      </h2>
+      {% for movie in footers %}
+      <a href="{{movie.get_absolute_url}}">
+        <span title="{{movie.title}}">{{movie.title|truncatechars:25}}</span>
+      </a>
+      {% endfor %}
+    </div>
+    
+    <div class="footer__bottom">
+      <div class="text-center">
+         جميع الحقوق محفوظة 
+        <a href="">العثمانيون</a>
+        © 2020
+      </div>
+    </div>
+  </footer>

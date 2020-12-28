@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}البحث عن {{request.GET.q}}{% endblock title %} 
+{% block background %}{% for movie in movies %}{% if forloop.first %}{{movie.image}}{% endif %}{% endfor %}{% endblock background %} 
+{% block content %}
+<div class="head m-3 text-center">
+    <h2><i class="fa fa-search"></i> بحث عن : <label>{{request.GET.q}}</label></h2>
+</div>
+<div class="container mt-4 ">
+    <div class="row justify-content-center">
+      {% for movie in movies %}
+      <!--=========================================================-->
+      <!--                  Start Film Element                     -->
+      <!--=========================================================-->
+      <div class="col-xl-2-4 col-lg-3 col-md-3 col-sm-4 col-12">
+        <div class="block">
+          <a href="{{movie.get_absolute_url}}">
+            <!--================ Start Cover ================-->
+            <!-- Main Cover -->
+            <div class="backg" style="background-image:url({{movie.image}});"></div>
+            <!-- Part Top Lift -->
+            <div class="img-1" style="background-image:url({{movie.image}});"></div>
+            <!-- Part Top Right -->
+            <div class="img-2" style="background-image:url({{movie.image}});"></div>
+            <!-- Part Bottom Lift -->
+            <div class="img-3" style="background-image:url({{movie.image}});"></div>
+            <!-- Part Bottom Right -->
+            <div class="img-4" style="background-image:url({{movie.image}});"></div>
+            <!--================ End Cover ================-->
+
+            <!--================ Start Film Detail ================-->
+            <!-- Translator -->
+            <span class="img__trans">{% if movie.translated %}مترجم{% endif %}</span>
+            <!-- Year -->
+            <span class="img__year">{{movie.year}}</span>
+            <!--================ Start Film Detail ================-->
+
+            <!--================ Start More Detail ================-->
+            <!-- Right Bar -->
+            <ul class="detail__list text-uppercase">
+              <li><span><i class="fa fa-play"></i></span> {{movie.quality}}</li>
+              <li><span><i class="fa fa-calendar-o"></i></span> {{movie.year}}</li>
+            </ul>
+            <!-- Lift Bar -->
+            <ul class="detail__list detail__list2">
+              <li><span><i class="fa fa-film"></i></span>  افلام </li>
+              <li><span><i class="fa fa-eye"></i></span> {{movie.views}}</li>
+            </ul>
+            <!-- Film Name -->
+            <div class="film__title">
+              فيلم {{movie.title}}
+            </div>
+            <!-- Film Content -->
+            <div class="film__content">
+              {{movie.caption|truncatewords:15|linebreaks}}
+            </div>
+            <!--================ Start More Detail ================-->
+          </a>
+        </div>
+      </div>
+      <!--=========================================================-->
+      <!--                    End Film Element                     -->
+      <!--=========================================================-->
+      {% empty %}
+      <div class="container">
+        <figure class="text-center h4">
+        ربما كلمة البحث غير صحيحة او لا يوجد محتوى مطابق
+        <br>
+        <label class="mt-3 mb-5" style="color: #ffde31;">
+        برجاء التأكد من إنك قمت بإدخال الكلمة التي تحاول البحث 
+        عنها بطريقة صحيحة 
+        </label>
+        </figure>
+        </div>
+      {% endfor %}
+    </div>
+    
+    {% if movies %}
+    {% include "pagination.html" with page=movies %}
+    {% endif %}
+        
+    
+</div>
+{% endblock content %}

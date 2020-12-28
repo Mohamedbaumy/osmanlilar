@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}العثمانيون{% endblock title %} 
+
+{% block background %}{% for epi in tv %}{% if forloop.first %}{{epi.movie.image}}{% endif %}{% endfor %}{% endblock background %}
+  
+{% block content %}
+<div class="owl-carousel owl-theme mb-3">
+    {% for movie in movies %}
+    <div class="item">
+        <div class="movie">
+          <a href="{{movie.get_absolute_url}}">
+            <span class="slider__fixed">{% if movie.fix %}مثبت{% endif %}</span>
+            <span class="slider__trans">{% if movie.translated %}مترجم{% endif %}</span>
+            <img class="item" width="100%" height="266px" src="{{movie.image}}" alt="">
+            <div class="slider__quality">
+              <li class="text-uppercase">
+                <span><i class="fa fa-play"></i></span> {{movie.quality}}
+              </li>
+            </div>
+            <div class="slider__year">
+              <li>
+                <span><i class="fa fa-calendar"></i></span> {{movie.year}}
+              </li>
+            </div>
+            <div class="slider_content">
+              <h2>{{movie.title}} {{movie.year}}</h2>
+              <p>{{movie.caption|truncatewords:15}}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+<div class="filter">
+    <div class="container filter__cont">
+      <span class="filter__new">المضاف حديثا</span>
+    </div>
+    <div class="container row"></div>
+</div>
+  <div class="container mt-4 ">
+    <div class="row justify-content-center m-0">
+      {% for epi in tv %}   
+      <!--=========================================================-->
+      <!--                  Start Film Element                     -->
+      <!--=========================================================-->
+      <div class="col-xl-2-4 col-lg-3 col-md-3 col-sm-4 col-11 mb-2">
+        <div class="block">
+          <a href="{{epi.get_absolute_url}}">
+            <!--================ Start Cover ================-->
+            <!-- Main Cover -->
+            <div class="backg" style="background-image:url({{epi.movie.image}});"></div>
+            <!-- Part Top Lift -->
+            <div class="img-1" style="background-image:url({{epi.movie.image}});"></div>
+            <!-- Part Top Right -->
+            <div class="img-2" style="background-image:url({{epi.movie.image}});"></div>
+            <!-- Part Bottom Lift -->
+            <div class="img-3" style="background-image:url({{epi.movie.image}});"></div>
+            <!-- Part Bottom Right -->
+            <div class="img-4" style="background-image:url({{epi.movie.image}});"></div>
+            <!--================ End Cover ================-->
+
+            <!--================ Start Film Detail ================-->
+            <!-- Translator -->
+            <span class="img__trans">{% if epi.movie.translated %}مترجم{% endif %}</span>
+            <!-- Year -->
+            <span class="img__year">{{epi.movie.year}}</span>
+            <!-- Episode -->
+            <span class="img__episode">حلقة {{epi.epi_num}}</span>
+            <!--================ Start Film Detail ================-->
+
+            <!--================ Start More Detail ================-->
+            <!-- Right Bar -->
+            <ul class="detail__list text-uppercase">
+              <li><span><i class="fa fa-play"></i></span> {{epi.movie.quality}}</li>
+              <li><span><i class="fa fa-calendar-o"></i></span> {{epi.movie.year}}</li>
+            </ul>
+            <!-- Lift Bar -->
+            <ul class="detail__list detail__list2">
+              <li><span><i class="fa fa-film"></i></span> مسلسلات </li>
+              <li><span><i class="fa fa-eye"></i></span> {{epi.views}}</li>
+            </ul>
+            <!-- Film Name -->
+            <div class="film__title">
+              {{epi.title}}
+            </div>
+            <!-- Film Content -->
+            <div class="film__content">
+              {{epi.movie.caption|truncatewords:15|linebreaks}}
+            </div>
+            <!--================ Start More Detail ================-->
+          </a>
+        </div>
+      </div>
+      <!--=========================================================-->
+      <!--                    End Film Element                     -->
+      <!--=========================================================-->
+      {% endfor %}
+    </div>
+    {% include "pagination.html" with page=tv %}
+    
+  </div>
+{% endblock content %}

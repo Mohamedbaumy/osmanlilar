@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}{{movie.title}}{% endblock title %} 
+{% block background %}{{movie.image}}{% endblock %}
+{% block content %}
+<div class="container info">
+    <div class="row">
+      <div class="col-xl-3 col-lg-4 col-md-6 ">
+        <div class="poster">
+          <span class="viewsSpan"><i class="fa fa-eye"></i> {{movie.views}}</span>
+          <img src="{{movie.image}}">
+          </div>
+      </div>
+      <div class="col-xl-6 col-lg-5 col-md-6 ">
+        <div class="centerSingle">
+          <div class="titleShape text-center">
+            <h3>فيلم {{movie.title}}</h3>
+          </div>
+          <div class="storyFilm text-center">
+            <p id="showPage-description" >
+              <strong>{{movie.caption}}</strong>
+            </p>
+          </div>
+          <div class="titleShape text-center">
+            <ul>
+              <li>
+                <span>الجودة : </span> 
+                <a class="text-uppercase" >{{movie.quality}}</a> 
+              </li>
+              <li>
+                <span>سنة الاصدار : </span> 
+                <a >{{movie.year}}</a> 
+              </li>
+              <li>
+                <span>التصنيف : </span>  
+                <a > افلام </a>   
+              </li>
+            </ul>
+          </div>
+          <ul class="detailsContentSide text-center">
+            <li>
+              <span>الممثلين : </span>
+              {% for actor in movie.movie_actor.all %}
+              {% if actor.actor_type == "actor" %}
+              <a>{{actor}}</a>
+              {% endif %} 
+              {% endfor %}
+            </li>
+          </ul>
+          <div class="buttonsDownloadAndWatch">
+            <a href='{% url "show" watch_server.slug %}' class="watchButton w-100">
+              <span>مشاهدة و تحميل</span>
+            </a>            
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-12 ">
+        <ul class="detailsPoster">
+          <li>
+            <span>إخراج : </span>
+            {% for actor in movie.movie_actor.all %}
+            {% if actor.actor_type == "director" %}
+            <a >{{actor}}</a>
+            {% endif %} 
+            {% endfor %}
+          </li>
+          <li>
+            <span>تأليف : </span>
+            {% for actor in movie.movie_actor.all %}
+            {% if actor.actor_type == "writer" %}
+            <a >{{actor}}</a>
+            {% endif %} 
+            {% endfor %}
+          </li>
+          <li>
+            <span>النوع : </span>
+            {% for c in movie.category.all %}
+              {{c}},
+            {% endfor %}
+          </li>
+          <div class="ratesuesed"></div>
+        </ul>
+      </div>
+    </div>
+</div>
+
+
+
+<div class="breadcrumbs mt-4">
+  <div id="mpbreadcrumbs">
+    <ol>
+      <span>
+      <a href='{% url "home" %}'>
+      <span>الرئيسية</span>
+      </a>
+      </span>
+      »
+      <span>
+      <a >
+      <span>افلام</span>
+      </a>
+      </span>
+      <span>
+      </span>
+      »
+      <span>فيلم {{movie.title}}</span>
+    </ol>
+  </div>
+</div>
+
+<div class="related mx-3">
+  <div class="row justify-content-center">
+    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+      <div class="row justify-content-center mx-2">
+        <div class="button "  data-text="افلام عربية">
+          <span>المسلسلات</span>
+        </div>
+        {% for ep in series %}
+        <div class="col-xl-4 col-lg-3 col-md-6 col-sm-6 col-12">
+          <a class="post" href="{{ep.get_absolute_url}}">
+            <img src="{{ep.image}}">
+            <span class="title">مسلسل {{ep.title}}</span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+      <div class="row justify-content-center mx-2">
+        <div class="button "  data-text="افلام عربية">
+          <span>الافلام</span>
+        </div>
+        {% for mv in movies %}
+        <div class="col-xl-4 col-lg-3 col-md-6 col-sm-6 col-12">
+          <a class="post" href="{{mv.get_absolute_url}}">
+            <img src="{{mv.image}}">
+            <span class="title">فيلم {{mv.title}}</span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

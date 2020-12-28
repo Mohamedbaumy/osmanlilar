@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}مشاهدة{% endblock title %} 
+{% block background %}{{image}}{% endblock %}
+{% block content %}
+<div class="watch">
+    <div class="left">
+      <h2><i class="fa fa-desktop"></i> سيرفرات المشاهدة</h2>
+      <ul class="serversUl">
+          {% for server in servers %}
+          {% if server.link_type == 'server' %}
+            <a {% if watched == server %}class="active"{% endif %} href="{{server.get_absolute_url}}"><li>{{server}} </li></a>
+          {% endif %}
+          {% endfor %}
+      </ul>
+      <a href="{{movie.get_absolute_url}}">
+        <div class="backToSingle">رجوع للتفاصيل <i class="fa fa-angle-left"></i></div>
+      </a>
+    </div>
+    <div class="right">
+      <div class="desktop-wrapper">
+        
+        {% if watched.link %}
+        <iframe width="560" height="315" src="{{watched.link}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% else %}
+        {{ watched.iframe|safe}}
+        {% endif %}
+          
+        
+      </div>
+
+      <ul class="download">
+        <h2><i class="fa fa-download"></i> سيرفرات التحميل</h2>
+        {% for server in servers %}
+        {% if server.link_type == 'download' %}
+        <li>
+            <a href="{{server.link}}" class="downloadserver">
+              <i class="fa fa-download"></i>
+              <span>{{server}}</span>
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+{% endblock content %}
